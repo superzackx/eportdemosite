@@ -1,3 +1,105 @@
 <%- include("partials/header.ejs") %>
-
-<%- include("partials/footer.ejs") %>
+    <% if(isSpammer){ %>
+        <div class="modal" tabindex="-1" id="exampleModalId">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+            <br>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="hero" style="text-align: center;">
+                            <div class="card mx-auto" style="width: 32rem;">
+                                <div class="card-body">
+                                    <h1 class="display-3" style="font-weight: bold; color: black;">Welcome to eTalks</h1>
+                                    <p class="lead">Since everyone is busy creating microblogging platforms, I'll make
+                                        one too.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="/new" method="post" class="form-group">
+                            <textarea name="message" id="" cols="35" rows="8" class="form-control" maxlength="150"
+                                placeholder="Enter your thoughts here..." required></textarea>
+                            <% if(loggedIn){ %>
+                                <% if(isSpammer){ %>
+                                <button class="btn btn-danger w-100 rounded-2" style="margin-top: 6px;" disabled>Spamming is not appreciated.</button>
+                                <% } else { %>
+                                <input type="submit" value="Post" class="form-control" style="font-weight: bold;">
+                                <% } %>
+                                <% } else { %>
+                                <a href="/login" class="btn btn-secondary w-100 rounded-2" style="margin-top: 6px;">Login to Post</a>
+                                <% } %>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row" style="text-align: center;">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h1 class="display-6" style="color: black; font-weight: bold;">No<br>Comments.</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h1 class="display-6" style="color: black; font-weight: bold;">No<br>Likes.</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 style="color: black; font-weight: bold; font-size: 37px;">Just share your
+                                        thoughts.</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <h1 style="text-align: center; font-weight: bold;">Existing Posts</h1>
+                <br>
+                <div class="postFlow">
+                    <% posts.forEach(post=> { %>
+                        <div class="card mx-auto" style="max-width: 36rem;" id="<%= post._id %>">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="/user/<%= post.user %>" style="text-decoration: none;">
+                                        <%= post.user %>
+                                    </a>
+                                </h5>
+                                <p class="card-text">
+                                    <%= post.message %>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                Posted on <%= (new Date(post.createdAt)).toLocaleDateString('en-GB') %>
+                            </div>
+                        </div>
+                        <br>
+                        <% }) %>
+                </div>
+            </div>
+            <br>
+            <br>
+                    <%- include("partials/footer.ejs") %>

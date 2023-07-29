@@ -1,0 +1,27 @@
+<%- include('partials/header.ejs') %>
+<div class="container">
+    <br>
+    <h1 class="display-4" style="font-weight: bold; text-align: center;">Posts by <%= user %></h1>
+    <br>
+    <div class="postFlow">
+        <% posts.forEach(post=> { %>
+            <div class="card mx-auto" style="max-width: 25rem;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="/user/<%= post.user %>" style="text-decoration: none;">
+                            <%= post.user %>
+                        </a>
+                    </h5>
+                    <p class="card-text">
+                        <%= post.message %>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    Posted on <%= (new Date(post.createdAt)).toLocaleDateString('en-GB') %>
+                </div>
+            </div>
+            <br>
+            <% }) %>
+    </div>
+</div>
+<%- include('partials/footer.ejs') %>
